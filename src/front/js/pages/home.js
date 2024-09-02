@@ -8,19 +8,24 @@ export const Home = () => {
 
 	return (
 		<div className="text-center mt-5">
-			<h1>Hello Rigo!!</h1>
-			<p>
-				<img src={rigoImageUrl} />
+			<h1 className="display-3 font-weight-bold">
+				<span className="text-dark">PINTA</span><span className="text-primary">CAR</span>
+			</h1>
+			<p className="lead text-muted custom-paragraph">
+				PORTAL NUMERO UNO EN COMPRAVNETA DE VEHICULOS
 			</p>
-			<div className="alert alert-info">
-				{store.message || "Loading message from the backend (make sure your python backend is running)..."}
+			<div className="container">
+				<div className="row justify-content-center">
+					<div className="col-12 col-md-6 d-flex flex-column">
+						<button type="button" className="btn btn-primary mb-3">Vender mi coche</button>
+						<button type="button" className="btn btn-primary mb-3">Comprar coche</button>
+						<button type="button" className="btn btn-primary mb-3">Talleres</button>
+						<button type="button" className="btn btn-primary mb-3">Stock</button>
+					</div>
+				</div>
 			</div>
-			<p>
-				This boilerplate comes with lots of documentation:{" "}
-				<a href="https://start.4geeksacademy.com/starters/react-flask">
-					Read documentation
-				</a>
-			</p>
+			
+			
 		</div>
 	);
 };

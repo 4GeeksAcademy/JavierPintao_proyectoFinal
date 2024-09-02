@@ -5,3 +5,22 @@
     one more css for each page that will contain the selected used 
     on that page only (the ones not reused in other pages).
 */
+h1 span {
+    font-weight: 900; /* Valor máximo para un grosor muy elevado */
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.custom-paragraph {
+    font-size: 1.25rem; /* Tamaño de fuente moderadamente grande */
+    color: #333; /* Gris oscuro para un contraste agradable */
+    font-weight: 500; /* Grosor de fuente semi-negrita */
+    margin-top: 0.5rem; /* Margen superior para un ajuste más cercano al título */
+    margin-bottom: 1.5rem; /* Margen inferior para espacio adecuado con los botones */
+    line-height: 1.6; /* Espaciado de línea para mejorar la legibilidad */
+    text-transform: uppercase; /* Transformar el texto a mayúsculas para un toque profesional */
+    letter-spacing: 1px; /* Espaciado entre letras para claridad */
+    border-bottom: 2px solid #007bff; /* Línea de borde en la parte inferior del párrafo */
+    padding-bottom: 0.5rem; /* Espacio adicional debajo del texto para separación visual */
+}
