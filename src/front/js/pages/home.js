@@ -2,6 +2,8 @@ import React, { useContext } from "react";
 import { Context } from "../store/appContext";
 import rigoImageUrl from "../../img/rigo-baby.jpg";
 import "../../styles/home.css";
+import { Link } from "react-router-dom";
+import { Vende } from "./vende";
 
 export const Home = () => {
 	const { store, actions } = useContext(Context);
@@ -17,10 +19,18 @@ export const Home = () => {
 			<div className="container">
 				<div className="row justify-content-center">
 					<div className="col-12 col-md-6 d-flex flex-column mt-3">
-						<button type="button" className="btn btn-primary mb-3">Vender mi coche</button>
-						<button type="button" className="btn btn-primary mb-3">Comprar coche</button>
-						<button type="button" className="btn btn-primary mb-3">Talleres</button>
+						<Link to="/vende" >
+							<button type="button" className="btn btn-primary mb-3">Vender mi coche</button>
+						</Link>
+						<Link to="/compra">
+							<button type="button" className="btn btn-primary mb-3">Comprar coche</button>
+						</Link>
+						<Link to="/talleres">
+							<button type="button" className="btn btn-primary mb-3">Talleres</button>
+						</Link>
+						<Link to="/stock">
 						<button type="button" className="btn btn-primary mb-3">Stock</button>
+						</Link>
 					</div>
 				</div>
 			</div>
