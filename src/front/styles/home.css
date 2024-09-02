@@ -6,6 +6,7 @@
     on that page only (the ones not reused in other pages).
 */
 h1 span {
+    
     font-weight: 900; /* Valor máximo para un grosor muy elevado */
     letter-spacing: 3px;
     text-transform: uppercase;

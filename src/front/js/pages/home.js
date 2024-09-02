@@ -7,16 +7,16 @@ export const Home = () => {
 	const { store, actions } = useContext(Context);
 
 	return (
-		<div className="text-center mt-5">
-			<h1 className="display-3 font-weight-bold">
+		<div className="text-center mt-0">
+			<h1 className="display-3 font-weight-bold titulo">
 				<span className="text-dark">PINTA</span><span className="text-primary">CAR</span>
 			</h1>
 			<p className="lead text-muted custom-paragraph">
-				PORTAL NUMERO UNO EN COMPRAVNETA DE VEHICULOS
+				PORTAL NUMERO UNO EN COMPRAVENTA DE VEHICULOS
 			</p>
 			<div className="container">
 				<div className="row justify-content-center">
-					<div className="col-12 col-md-6 d-flex flex-column">
+					<div className="col-12 col-md-6 d-flex flex-column mt-3">
 						<button type="button" className="btn btn-primary mb-3">Vender mi coche</button>
 						<button type="button" className="btn btn-primary mb-3">Comprar coche</button>
 						<button type="button" className="btn btn-primary mb-3">Talleres</button>
@@ -24,8 +24,6 @@ export const Home = () => {
 					</div>
 				</div>
 			</div>
-			
-			
 		</div>
 	);
 };
