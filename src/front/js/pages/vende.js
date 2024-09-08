@@ -1,30 +1,81 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useContext, useState } from "react";
+import { Context } from "../store/appContext";
 
 export const Vende = () => {
-    return(
-        <div className="text-center">
-            <div className="d-flex flex-column justify-content-center align-items-center min-vh-100 bg-light">
-                <h1 className="mb-4 text-center">Vende su coche</h1>
-                <form className="form-container shadow p-4 rounded bg-white">
-                    <div className="mb-3">
-                        <label htmlFor="exampleInputEmail1" className="form-label">Email address</label>
-                        <input type="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" />
-                        <div id="emailHelp" className="form-text">We'll never share your email with anyone else.</div>
+    const { actions } = useContext(Context);
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+
+    const handleSignUp = (e) => {
+        e.preventDefault();
+        actions.crearUsuario(email, password);
+    };
+
+    const handleLogin = (e) => {
+        e.preventDefault();
+        actions.loginUsuario(email, password);
+    };
+
+    return (
+        <div className="d-flex justify-content-center mt-5">
+            <div className="border bg-light p-2" style={{ width: "500px", marginRight: "10px" }}>
+                <form className="text-start" onSubmit={handleSignUp}>
+                    <div className="text-center">
+                        <h1>Crear usuario</h1>
                     </div>
-                    <div className="mb-3">
-                        <label htmlFor="exampleInputPassword1" className="form-label">Password</label>
-                        <input type="password" className="form-control" id="exampleInputPassword1" />
+                    <div className="mt-3 mx-5">
+                        <label htmlFor="signUpEmail" className="form-label">E-mail</label>
+                        <input 
+                            onChange={(e) => setEmail(e.target.value)} 
+                            type="email" 
+                            className="form-control" 
+                            id="signUpEmail" 
+                            aria-describedby="emailHelp" 
+                        />
                     </div>
-                    <div className="mb-3 form-check">
-                        <input type="checkbox" className="form-check-input" id="exampleCheck1" />
-                        <label className="form-check-label" htmlFor="exampleCheck1">Check me out</label>
+                    <div className="mt-3 mx-5">
+                        <label htmlFor="signUpPassword" className="form-label">Contraseña</label>
+                        <input 
+                            onChange={(e) => setPassword(e.target.value)} 
+                            type="password" 
+                            className="form-control" 
+                            id="signUpPassword" 
+                        />
                     </div>
-                    <button type="submit" className="btn btn-primary w-100">Submit</button>
+                    <div className="text-center">
+                        <button type="submit" className="btn btn-primary text-center my-3">Enviar</button>
+                    </div>
+                </form>
+            </div>
+            <div className="border bg-light p-2" style={{ width: "500px" }}>
+                <form className="text-start" onSubmit={handleLogin}>
+                <div className="text-center">
+                        <h1>Iniciar sesion</h1>
+                    </div>
+                    <div className="mt-3 mx-5">
+                        <label htmlFor="loginEmail" className="form-label">E-mail</label>
+                        <input 
+                            onChange={(e) => setEmail(e.target.value)} 
+                            type="email" 
+                            className="form-control" 
+                            id="loginEmail" 
+                            aria-describedby="emailHelp" 
+                        />
+                    </div>
+                    <div className="mt-3 mx-5">
+                        <label htmlFor="loginPassword" className="form-label">Contraseña</label>
+                        <input 
+                            onChange={(e) => setPassword(e.target.value)} 
+                            type="password" 
+                            className="form-control" 
+                            id="loginPassword" 
+                        />
+                    </div>
+                    <div className="text-center">
+                        <button type="submit" className="btn btn-primary text-center my-3">Enviar</button>
+                    </div>
                 </form>
             </div>
         </div>
-       
-    )
-}
-
+    );
+};
