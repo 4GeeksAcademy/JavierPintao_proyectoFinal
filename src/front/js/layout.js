@@ -7,13 +7,15 @@ import { Home } from "./pages/home";
 import { Demo } from "./pages/demo";
 import { Single } from "./pages/single";
 import injectContext from "./store/appContext";
-import { Vende } from "./pages/vende";
+import { Inicio } from "./pages/inicio";
 import { Compra } from "./pages/compra";
 import { Talleres } from "./pages/talleres";
 import { Stock } from "./pages/stock";
+import {  } from "./pages/publica";
 
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
+import { Publica } from "./pages/publica";
 
 //create your first component
 const Layout = () => {
@@ -32,10 +34,11 @@ const Layout = () => {
                         <Route element={<Home />} path="/" />
                         <Route element={<Demo />} path="/demo" />
                         <Route element={<Single />} path="/single/:theid" />
-                        <Route element={<Vende />} path="/vende" />
+                        <Route element={<Inicio />} path="/inicio" />
                         <Route element={<Compra />} path="/compra" />
                         <Route element={<Talleres />} path="/talleres" />
                         <Route element={<Stock />} path="/stock" />
+                        <Route element={<Publica />} path="/publica" />
                         <Route element={<h1>Not found!</h1>} />
                     </Routes>
                     <Footer />

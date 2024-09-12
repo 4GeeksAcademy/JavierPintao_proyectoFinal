@@ -1,19 +1,21 @@
 import React, { useContext, useState } from "react";
 import { Context } from "../store/appContext";
 
-export const Vende = () => {
+export const Inicio = () => {
     const { actions } = useContext(Context);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
     const handleSignUp = (e) => {
+        console.log("inicio.js", email)
+        console.log("inicio.js", password)
         e.preventDefault();
         actions.crearUsuario(email, password);
     };
 
     const handleLogin = (e) => {
         e.preventDefault();
-        actions.loginUsuario(email, password);
+        actions.iniciarSesion(email, password);
     };
 
     return (

@@ -16,11 +16,11 @@ export const Home = () => {
 			<div className="container">
 				<div className="row justify-content-center">
 					<div className="col-12 d-flex flex-column mt-3">
-						<Link to="/vende" >
-							<button type="button" className="btn btn-primary col-8 mb-3">Vender mi coche</button>
+						<Link to="/inicio" >
+							<button type="button" className="btn btn-primary col-8 mb-3">Iniciar sesion</button>
 						</Link>
-						<Link to="/compra">
-							<button type="button" className="btn btn-primary mb-3 col-8">Comprar coche</button>
+						<Link to="/publica">
+							<button type="button" className="btn btn-primary mb-3 col-8">Publica tu anuncio</button>
 						</Link>
 						<Link to="/talleres">
 							<button type="button" className="btn btn-primary mb-3 col-8">Talleres</button>
