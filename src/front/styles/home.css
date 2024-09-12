@@ -13,7 +13,7 @@ h1 span {
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
 }
 
-.parrafo-linea {
+.parrafo-linea {/*parrafo talleres y home*/
     font-size: 1.25rem; /* Tamaño de fuente moderadamente grande */
     font-weight: 500; /* Grosor de fuente semi-negrita */
     margin-top: 0.5rem; /* Margen superior para un ajuste más cercano al título */
@@ -24,7 +24,7 @@ h1 span {
     border-bottom: 2px solid #007bff; /* Línea de borde en la parte inferior del párrafo */
     padding-bottom: 0.5rem; /* Espacio adicional debajo del texto para separación visual */
 }
-.parrafo {
+.parrafo {/*talleres*/
     font-size: 1.25rem; /* Tamaño de fuente moderadamente grande */
     font-weight: 500; /* Grosor de fuente semi-negrita */
     margin-top: 0.5rem; /* Margen superior para un ajuste más cercano al título */

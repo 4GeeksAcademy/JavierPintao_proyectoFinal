@@ -2,7 +2,7 @@ import React from "react";
 
 export const Talleres = () => {
     return(
-        <div className="text-center mt-0">
+        <div className="text-muted parrafo-linea mt-5">
             <p className=" text-muted parrafo">
                 En esta seccion encontraras nuestra red talleres de concertados.
             </p>

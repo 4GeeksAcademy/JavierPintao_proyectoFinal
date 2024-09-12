@@ -37,7 +37,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				setStore({ demo: demo });
 			},
 			crearUsuario: (email, password) => {
-				fetch('https://opulent-spork-q6jprgx7gp5h4w75-3001.app.github.dev/api/vende', {
+				fetch('https://opulent-spork-q6jprgx7gp5h4w75-3001.app.github.dev/api/signUp', {
 					method: 'POST',
 					headers: {
 						'Content-Type': 'application/json'
@@ -64,7 +64,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			},
 			iniciarSesion: (email, password) => {
-				fetch('https://opulent-spork-q6jprgx7gp5h4w75-3001.app.github.dev/api/vende', {
+				fetch('https://opulent-spork-q6jprgx7gp5h4w75-3001.app.github.dev/api/login', {
 					method: 'POST',
 					headers: {
 						'Content-Type': 'application/json'

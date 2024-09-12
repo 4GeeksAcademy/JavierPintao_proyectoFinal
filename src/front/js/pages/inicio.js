@@ -1,21 +1,25 @@
 import React, { useContext, useState } from "react";
 import { Context } from "../store/appContext";
+import { useNavigate } from "react-router-dom";
 
 export const Inicio = () => {
     const { actions } = useContext(Context);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-
+    const navigate = useNavigate();
+    
     const handleSignUp = (e) => {
-        console.log("inicio.js", email)
-        console.log("inicio.js", password)
+       
         e.preventDefault();
         actions.crearUsuario(email, password);
+        setEmail("");
+        setPassword("");
     };
 
     const handleLogin = (e) => {
         e.preventDefault();
         actions.iniciarSesion(email, password);
+        navigate("/")
     };
 
     return (
@@ -33,6 +37,7 @@ export const Inicio = () => {
                             className="form-control" 
                             id="signUpEmail" 
                             aria-describedby="emailHelp" 
+                            value={email}
                         />
                     </div>
                     <div className="mt-3 mx-5">
@@ -41,7 +46,8 @@ export const Inicio = () => {
                             onChange={(e) => setPassword(e.target.value)} 
                             type="password" 
                             className="form-control" 
-                            id="signUpPassword" 
+                            id="signUpPassword"
+                            value={password} 
                         />
                     </div>
                     <div className="text-center">
