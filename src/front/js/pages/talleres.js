@@ -21,8 +21,8 @@ export const Talleres = () => {
 
     return (
         <div className="text-center parrafo mt-5">
-            <p className="text-muted parrafo">
-                En esta sección encontrarás nuestra red de talleres concertados
+            <p className="text-muted">
+                Red de talleres concertados
             </p>
            
             <div className="container">

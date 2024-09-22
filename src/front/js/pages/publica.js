@@ -5,7 +5,7 @@ import "../../styles/home.css";
 export const Publica = () => {
     return (
         <div className="container d-flex flex-column align-items-center" style={{ height: '100vh' }}>
-            <h1 className="parrafo mb-4">Publica su anuncio</h1>
+            <h1 className="text-muted parrafo mb-4">Publica su anuncio</h1>
             <div className="card" style={{ width: '18rem' }}>
                 <img src="..." className="card-img-top" alt="..." />
                 <div className="card-body">
@@ -28,10 +28,13 @@ export const Publica = () => {
                     
                     <div className="d-flex">
                         <a href="#" className="btn btn-primary me-2">Añadir a la cesta</a>
-                        <a href="#" className="btn btn-primary">Comprar</a>
+                        <a href="#" className="btn btn-primary">
+                            Comprar
+                        </a>
                     </div>
                 </div>
             </div>
+            <button className="btn btn-success mt-4">Publica</button>
         </div>
     );
 };
