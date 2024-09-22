@@ -3,40 +3,46 @@ import MapComponent from "../component/mapComponent";
 
 export const Talleres = () => {
     const [mapCenter, setMapCenter] = useState({
-        lat: -3.745,
-        lng: -38.523
+        lat: 40.4168,
+        lng: -3.7038
     });
 
-    const handleButtonClick = () => {
-        setMapCenter({
-            lat: 37.7749,  // Nueva latitud (por ejemplo, San Francisco)
-            lng: -122.4194 // Nueva longitud (por ejemplo, San Francisco)
-        });
+    const handleButtonClickM = () => {
+        setMapCenter({ lat: 40.4168, lng: -3.7038 });
+    };
+
+    const handleButtonClickB = () => {
+        setMapCenter({ lat: 41.3851, lng: 2.1734 });
+    };
+
+    const handleButtonClickV = () => {
+        setMapCenter({ lat: 39.4699, lng: -0.3763 });
     };
 
     return (
-        <div className="text-muted parrafo-linea mt-5">
-            <p className=" text-muted parrafo">
-                En esta seccion encontraras nuestra red talleres de concertados.
+        <div className="text-center parrafo mt-5">
+            <p className="text-muted parrafo">
+                En esta sección encontrarás nuestra red de talleres concertados
             </p>
-            <p className="lead text-muted parrafo">
-                Si es vendedor podra poner a punto su vehiculo antes de sacarlo a la venta.
-            </p>
-            <p className="lead text-muted parrafo-linea">
-                Si es comprador podra revisarlo por completo para comprar con toda seguridad.
-            </p>
+           
             <div className="container">
                 <div className="row justify-content-center">
                     <div className="col-md-6 col-sm-8">
                         <MapComponent center={mapCenter} />
                     </div>
-                    <div className="text-center mt-4">
-                        <button onClick={handleButtonClick} className="btn btn-primary">
-                            Ir a San Francisco
+                    <div className="col-md-4 d-flex flex-column mt-4" style={{ height: '100%' }}>
+                        <button onClick={handleButtonClickM} className="btn btn-primary flex-grow-1 mb-2">
+                            Taller Madrid
+                        </button>
+                        <button onClick={handleButtonClickB} className="btn btn-secondary flex-grow-1 mb-2">
+                            Taller Barcelona
+                        </button>
+                        <button onClick={handleButtonClickV} className="btn btn-success flex-grow-1 mb-2">
+                            Taller Valencia
                         </button>
                     </div>
                 </div>
             </div>
         </div>
-    )
-}
+    );
+};

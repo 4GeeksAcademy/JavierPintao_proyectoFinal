@@ -7,21 +7,15 @@ const containerStyle = {
   height: '400px'
 };
 
-const center = {
-  lat: 40.24205,
-  lng: -4.19574
-};
-
-function MapComponent() {
+function MapComponent({ center }) {  // Acepta "center" como prop
   return (
     <LoadScript googleMapsApiKey="AIzaSyD6awrXJhU7zStchlInJF1Oi6ZrywPcl_0">
       <GoogleMap
         mapContainerStyle={containerStyle}
-        center={center}
+        center={center}  // Usa el prop "center" para centrar el mapa
         zoom={10}
       >
-        {/* Puedes agregar marcadores, polígonos, o cualquier otro componente de Google Maps */}
-        <Marker position={center} />
+        <Marker position={center} />  {/* Agrega un marcador en el centro */}
       </GoogleMap>
     </LoadScript>
   );
