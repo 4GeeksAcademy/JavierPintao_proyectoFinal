@@ -18,10 +18,22 @@ export const Stock = () => {
                                     <h5 className="card-title">{anuncio.marca}</h5>
                                     <p className="card-text"><strong>Kilómetros:</strong> {anuncio.kilometros}</p>
                                     <p className="card-text"><strong>Año:</strong> {anuncio.ano}</p>
-                                    <p className="card-text"><strong>Precio:</strong> {anuncio.precio.toLocaleString()} €</p> {/* Cambiado aquí */}
+                                    <p className="card-text"><strong>Precio:</strong> {anuncio.precio.toLocaleString()} €</p>
                                     <p className="card-text"><strong>Descripción:</strong> {anuncio.descripcion}</p>
-                                    <button onClick={()=>actions.addCesta(anuncio)} className="fa fa-shopping-cart"></button>
-
+                                    <div className="d-flex justify-content-between">
+                                        <button 
+                                            onClick={() => actions.addCesta(anuncio)} 
+                                            className="fa fa-shopping-cart"
+                                            title="Añadir a la cesta"
+                                        ></button>
+                                        <button 
+                                            onClick={() => actions.eliminarAnuncio(anuncio.id)} 
+                                            className="btn btn-danger ml-2"
+                                            style={{ marginLeft: "10px" }} // Espaciado adicional
+                                        >
+                                            Eliminar
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
