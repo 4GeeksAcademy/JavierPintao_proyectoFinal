@@ -11,7 +11,7 @@ export const Navbar = () => {
 					</h1>
 				</Link>
 				<div className="d-flex">
-					<Link to="/demo" className="ml-3">
+					<Link to="/cesta" className="ml-3">
 						<span className="navbar-brand mb-0 h1">
 							<i className="fa fa-shopping-cart text-primary" />
 						</span>
