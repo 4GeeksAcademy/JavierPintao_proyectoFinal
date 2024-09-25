@@ -3,7 +3,7 @@ import { Context } from "../store/appContext";
 import "../../styles/home.css";
 
 export const Publica = () => {
-    const { actions } = useContext(Context); // Obtener acciones del contexto
+    const { store, actions } = useContext(Context); //
     const [marca, setMarca] = useState("");
     const [kilometros, setKilometros] = useState("");
     const [ano, setAno] = useState("");

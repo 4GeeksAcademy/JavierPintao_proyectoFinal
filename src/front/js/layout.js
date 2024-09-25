@@ -8,7 +8,7 @@ import { Cesta } from "./pages/cesta";
 import { Single } from "./pages/single";
 import injectContext from "./store/appContext";
 import { Inicio } from "./pages/inicio";
-import { Compra } from "./pages/compra";
+
 import { Talleres } from "./pages/talleres";
 import { Stock } from "./pages/stock";
 import {  } from "./pages/publica";
@@ -35,7 +35,6 @@ const Layout = () => {
                         <Route element={<Cesta />} path="/cesta" />
                         <Route element={<Single />} path="/single/:theid" />
                         <Route element={<Inicio />} path="/inicio" />
-                        <Route element={<Compra />} path="/compra" />
                         <Route element={<Talleres />} path="/talleres" />
                         <Route element={<Stock />} path="/stock" />
                         <Route element={<Publica />} path="/publica" />

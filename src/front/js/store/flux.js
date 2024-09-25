@@ -2,6 +2,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
 			anuncios: [],
+			cesta: [],
 			
 			
 		},
@@ -93,9 +94,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			addAnuncio: (marca, kilometros, ano, precio, descripcion, ) => {
 				const store = getStore();
-				const nuevosAnuncios = [...store.anuncios]; // Clonamos los anuncios existentes
+				const nuevosAnuncios = [...store.anuncios];
 			
-				// Agregamos el nuevo anuncio
+				
 				nuevosAnuncios.push({
 					marca,
 					kilometros,
@@ -105,11 +106,19 @@ const getState = ({ getStore, getActions, setStore }) => {
 					id: nuevosAnuncios.length + 1 // Puedes usar un ID único de otra manera
 				});
 			
-				// Actualizamos el store
+				
 				setStore({ anuncios: nuevosAnuncios });
 			},
-			
-
+			addCesta: (anuncio) => {
+                const store = getStore();
+                const existe = store.cesta.find(item => item.id === anuncio.id);
+                
+                if (existe) {
+                    setStore({ cesta: store.cesta.filter(item => item.id !== anuncio.id) });
+                } else {
+                    setStore({ cesta: [...store.cesta, anuncio] });
+                }
+			},
 		}
 	};
 };
