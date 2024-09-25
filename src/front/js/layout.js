@@ -10,7 +10,7 @@ import injectContext from "./store/appContext";
 import { Inicio } from "./pages/inicio";
 
 import { Talleres } from "./pages/talleres";
-import { Stock } from "./pages/stock";
+
 import {  } from "./pages/publica";
 
 import { Navbar } from "./component/navbar";
@@ -36,7 +36,7 @@ const Layout = () => {
                         <Route element={<Single />} path="/single/:theid" />
                         <Route element={<Inicio />} path="/inicio" />
                         <Route element={<Talleres />} path="/talleres" />
-                        <Route element={<Stock />} path="/stock" />
+                        
                         <Route element={<Publica />} path="/publica" />
                         <Route element={<h1>Not found!</h1>} />
                     </Routes>

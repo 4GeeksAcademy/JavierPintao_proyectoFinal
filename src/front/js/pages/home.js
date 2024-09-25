@@ -1,6 +1,5 @@
 import React, { useContext } from "react";
 import { Context } from "../store/appContext";
-import rigoImageUrl from "../../img/rigo-baby.jpg";
 import "../../styles/home.css";
 import { Link } from "react-router-dom";
 
@@ -13,22 +12,45 @@ export const Home = () => {
 			<p className="text-muted parrafo-linea mt-5">
 				PORTAL NUMERO UNO EN COMPRAVENTA DE VEHICULOS
 			</p>
-			<div className="container">
-				<div className="row justify-content-center">
-					<div className="col-12 d-flex flex-column mt-3">
-						<Link to="/inicio" >
-							<button type="button" className="btn btn-primary col-8 mb-3">Iniciar sesion</button>
-						</Link>
-						<Link to="/publica">
-							<button type="button" className="btn btn-primary mb-3 col-8">Publica tu anuncio</button>
-						</Link>
-						<Link to="/talleres">
-							<button type="button" className="btn btn-primary mb-3 col-8">Talleres</button>
-						</Link>
-						<Link to="/stock">
-						<button type="button" className="btn btn-primary mb-3 col-8">Stock</button>
-						</Link>
-					</div>
+			<div className="container my-5 bg-light">
+				<h1 className="text-muted text-center mb-4">Stock</h1>
+
+				<div className="row">
+					{store.anuncios.length > 0 ? (
+						store.anuncios.map((anuncio, index) => (
+							<div key={index} className="col-md-4 mb-4">
+								<div className="card shadow-sm">
+									<div className="card-body">
+										<h5 className="card-title">{anuncio.marca}</h5>
+										<p className="card-text"><strong>Kilómetros:</strong> {anuncio.kilometros}</p>
+										<p className="card-text"><strong>Año:</strong> {anuncio.ano}</p>
+										<p className="card-text"><strong>Precio:</strong> {anuncio.precio.toLocaleString()} €</p>
+										<p className="card-text"><strong>Descripción:</strong> {anuncio.descripcion}</p>
+										<div className="d-flex justify-content-between">
+											<button
+												onClick={() => actions.addCesta(anuncio)}
+												className="fa fa-shopping-cart"
+												title="Añadir a la cesta"
+											></button>
+											<button
+												onClick={() => actions.eliminarAnuncio(anuncio.id)}
+												className="btn btn-danger ml-2"
+												style={{ marginLeft: "10px" }} // Espaciado adicional
+											>
+												Eliminar
+											</button>
+										</div>
+									</div>
+								</div>
+							</div>
+						))
+					) : (
+						<div className="col-12">
+							<div className="alert alert-warning text-center" role="alert">
+								No hay anuncios publicados.
+							</div>
+						</div>
+					)}
 				</div>
 			</div>
 		</div>

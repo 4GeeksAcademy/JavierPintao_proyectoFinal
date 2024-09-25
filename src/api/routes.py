@@ -34,7 +34,7 @@ def create_user():
     email = request_body.get('email')
     password = request_body.get('password')
     
-    # verifica si el usuario existe
+    
     user_query = User.query.filter_by(email=email).first()
     if user_query:
         return jsonify({"msg": "User already exists"}), 409
