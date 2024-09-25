@@ -1,6 +1,7 @@
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
+			anuncios: [],
 			
 			
 		},
@@ -89,6 +90,26 @@ const getState = ({ getStore, getActions, setStore }) => {
 					});
 
 			},
+
+			addAnuncio: (marca, kilometros, ano, precio, descripcion, ) => {
+				const store = getStore();
+				const nuevosAnuncios = [...store.anuncios]; // Clonamos los anuncios existentes
+			
+				// Agregamos el nuevo anuncio
+				nuevosAnuncios.push({
+					marca,
+					kilometros,
+					ano,
+					precio,
+					descripcion,
+					id: nuevosAnuncios.length + 1 // Puedes usar un ID único de otra manera
+				});
+			
+				// Actualizamos el store
+				setStore({ anuncios: nuevosAnuncios });
+			},
+			
+
 		}
 	};
 };

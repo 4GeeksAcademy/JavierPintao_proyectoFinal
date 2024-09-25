@@ -3,8 +3,8 @@ import MapComponent from "../component/mapComponent";
 
 export const Talleres = () => {
     const [mapCenter, setMapCenter] = useState({
-        lat: 40.4168,
-        lng: -3.7038
+        lat: 40.2410,
+        lng: -4.1956
     });
 
     const handleButtonClickM = () => {
