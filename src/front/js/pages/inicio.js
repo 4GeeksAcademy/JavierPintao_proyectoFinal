@@ -4,28 +4,60 @@ import { useNavigate } from "react-router-dom";
 
 export const Inicio = () => {
     const { actions } = useContext(Context);
-    
+
     // Estado para el formulario de crear usuario
     const [signUpEmail, setSignUpEmail] = useState("");
     const [signUpPassword, setSignUpPassword] = useState("");
-
+    
     // Estado para el formulario de iniciar sesión
     const [loginEmail, setLoginEmail] = useState("");
     const [loginPassword, setLoginPassword] = useState("");
+
+    // Estados para mensajes de éxito o error
+    const [signUpSuccess, setSignUpSuccess] = useState(null); 
+    const [signUpError, setSignUpError] = useState(null);
+    const [loginSuccess, setLoginSuccess] = useState(null);  // Estado para éxito en iniciar sesión
+    const [loginError, setLoginError] = useState(null);  // Estado para error en iniciar sesión
 
     const navigate = useNavigate();
     
     const handleSignUp = (e) => {
         e.preventDefault();
-        actions.crearUsuario(signUpEmail, signUpPassword);
-        setSignUpEmail("");
-        setSignUpPassword("");
+
+        // Resetear mensajes de éxito y error
+        setSignUpSuccess(null);
+        setSignUpError(null);
+
+        actions.crearUsuario(signUpEmail, signUpPassword)
+            .then(() => {
+                setSignUpSuccess("Usuario creado con éxito.");
+                setSignUpEmail("");
+                setSignUpPassword("");
+            })
+            .catch((error) => {
+                setSignUpError("Error al crear el usuario. Intenta nuevamente.");
+                console.error(error);
+            });
     };
 
     const handleLogin = (e) => {
         e.preventDefault();
-        actions.iniciarSesion(loginEmail, loginPassword);
-        navigate("/");
+
+        // Resetear mensajes de éxito y error
+        setLoginSuccess(null);
+        setLoginError(null);
+
+        actions.iniciarSesion(loginEmail, loginPassword)
+            .then(() => {
+                // Inicio de sesión exitoso
+                setLoginSuccess("Inicio de sesión exitoso.");
+                navigate("/");  // Redirigir al usuario a la página principal o donde prefieras
+            })
+            .catch((error) => {
+                // Hubo un error al iniciar sesión
+                setLoginError("Error al iniciar sesión. Verifica tus credenciales.");
+                console.error(error);
+            });
     };
 
     return (
@@ -44,6 +76,7 @@ export const Inicio = () => {
                             className="form-control" 
                             id="signUpEmail" 
                             value={signUpEmail}
+                            required
                         />
                     </div>
                     <div className="mt-3 mx-5">
@@ -54,11 +87,16 @@ export const Inicio = () => {
                             className="form-control" 
                             id="signUpPassword"
                             value={signUpPassword} 
+                            required
                         />
                     </div>
                     <div className="text-center">
                         <button type="submit" className="btn btn-primary text-center my-3">Enviar</button>
                     </div>
+
+                    {/* Mostrar mensaje de éxito o error */}
+                    {signUpSuccess && <div className="alert alert-success text-center">{signUpSuccess}</div>}
+                    {signUpError && <div className="alert alert-danger text-center">{signUpError}</div>}
                 </form>
             </div>
 
@@ -76,6 +114,7 @@ export const Inicio = () => {
                             className="form-control" 
                             id="loginEmail" 
                             value={loginEmail}
+                            required
                         />
                     </div>
                     <div className="mt-3 mx-5">
@@ -86,11 +125,16 @@ export const Inicio = () => {
                             className="form-control" 
                             id="loginPassword"
                             value={loginPassword}
+                            required
                         />
                     </div>
                     <div className="text-center">
                         <button type="submit" className="btn btn-primary text-center my-3">Enviar</button>
                     </div>
+
+                    {/* Mostrar mensaje de éxito o error */}
+                    {loginSuccess && <div className="alert alert-success text-center">{loginSuccess}</div>}
+                    {loginError && <div className="alert alert-danger text-center">{loginError}</div>}
                 </form>
             </div>
         </div>

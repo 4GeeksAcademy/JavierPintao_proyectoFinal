@@ -20,59 +20,64 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.log("Error loading message from backend", error)
 				}
 			},
-			
+
 			crearUsuario: (email, password) => {
-				fetch('https://opulent-spork-q6jprgx7gp5h4w75-3001.app.github.dev/api/signUp', {
-					method: 'POST',
-					headers: {
-						'Content-Type': 'application/json'
-					},
-					body: JSON.stringify({
-						
-						email: email,
-						password: password,
-						is_active: true
+				return new Promise((resolve, reject) => {
+					fetch(process.env.BACKEND_URL + '/api/signUp', {
+						method: 'POST',
+						headers: {
+							'Content-Type': 'application/json'
+						},
+						body: JSON.stringify({
+							email: email,
+							password: password
+						})
 					})
-				})
 					.then(response => {
 						if (!response.ok) {
-							throw new Error('Error en la solicitud: ' + response.status);
+							return reject('Error en la solicitud: ' + response.status);  // Rechazamos la promesa en caso de error
 						}
 						return response.json();
 					})
 					.then(data => {
 						console.log('Datos recibidos:', data);
+						resolve(data);  // Resolución exitosa de la promesa
 					})
 					.catch(error => {
 						console.error('Hubo un problema con la solicitud:', error);
+						reject(error);  // Rechazamos la promesa con el error capturado
 					});
-
+				});
 			},
+			
 			iniciarSesion: (email, password) => {
-				fetch('https://opulent-spork-q6jprgx7gp5h4w75-3001.app.github.dev/api/login', {
-					method: 'POST',
-					headers: {
-						'Content-Type': 'application/json'
-					},
-					body: JSON.stringify({
-						email: email,
-						password: password
+				return new Promise((resolve, reject) => {
+					fetch(process.env.BACKEND_URL + '/api/login', {
+						method: 'POST',
+						headers: {
+							'Content-Type': 'application/json'
+						},
+						body: JSON.stringify({
+							email: email,
+							password: password
+						})
 					})
-				})
 					.then(response => {
 						if (!response.ok) {
-							throw new Error('Error en la solicitud: ' + response.status);
+							return reject('Error en la solicitud: ' + response.status);  // Rechazamos la promesa en caso de error
 						}
 						return response.json();
 					})
 					.then(data => {
 						console.log('Datos recibidos:', data);
-						localStorage.setItem("token", data.token)
+						localStorage.setItem("token", data.token);  // Guardamos el token en localStorage
+						resolve(data);  // Resolución exitosa de la promesa
 					})
 					.catch(error => {
 						console.error('Hubo un problema con la solicitud:', error);
+						reject(error);  // Rechazamos la promesa con el error capturado
 					});
-
+				});
 			},
 
 			addAnuncio: (marca, kilometros, ano, precio, descripcion, ) => {

@@ -2,7 +2,7 @@
 This module takes care of starting the API Server, loading the DB, and adding the endpoints.
 """
 from flask import Flask, request, jsonify, Blueprint
-from api.models import db, User, Vendedor, Comprador
+from api.models import db, User
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 from flask_jwt_extended import create_access_token
@@ -38,17 +38,11 @@ def create_user():
     user_query = User.query.filter_by(email=email).first()
     if user_query:
         return jsonify({"msg": "User already exists"}), 409
-     
-    else:
-        access_token = create_access_token(identity=user_login.id)
-        return jsonify({"token": access_token, "user_id": user_login.id}), 200
     
     # Crear usuario
-  
     new_user = User(
         email=email,
-        password=password,
-        is_active=request_body.get('is_active', True)
+        password=password
     )
     db.session.add(new_user)
     db.session.commit()
@@ -60,19 +54,15 @@ def login_user():
     request_body = request.json
     email = request_body.get('email')
     password = request_body.get('password')
-    user_login = User.query.filter_by(email=request_body['email']).first()
-    if user_login is None:
-        response_body = {
-            "msg": "User does not exist"
-        }
-        return jsonify(response_body), 404
-    elif password != user_login.password:
-        response_body = {
-            "msg": "Incorrect password"
-        }
-        return jsonify(response_body), 404
-    else:
-        access_token = create_access_token(identity=user_login.id)
-        return jsonify({"token": access_token, "user_id": user_login.id}), 200
+    if not email or not password:
+        return jsonify({"msg" : "todos los campos son requeridos"})
+    user_login = User.query.filter_by(email=email, password=password).first()
+    if not user_login:
+        return jsonify({"msg" : "email y password incorrecto"}), 401
+    token = create_access_token(identity = user_login.id)
+    return jsonify({"token" : token})
+
+
+    
 
 
