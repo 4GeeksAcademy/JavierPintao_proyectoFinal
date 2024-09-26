@@ -1,26 +1,52 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { Context } from "../store/appContext";
 import "../../styles/home.css";
 
 export const Publica = () => {
-    const { store, actions } = useContext(Context); //
+    const { store, actions } = useContext(Context);
     const [marca, setMarca] = useState("");
     const [kilometros, setKilometros] = useState("");
     const [ano, setAno] = useState("");
     const [descripcion, setDescripcion] = useState("");
     const [precio, setPrecio] = useState("");
-    const [mensaje, setMensaje] = useState(""); // Estado para el mensaje de éxito
+    const [mensaje, setMensaje] = useState("");
+    const [editingId, setEditingId] = useState(null); // Estado para el ID del anuncio en edición
 
     const handlePublicar = () => {
-        actions.addAnuncio(marca, kilometros, ano, precio, descripcion); // Llamar a la acción
-        setMensaje("Anuncio publicado con éxito!");
-        // Aquí puedes agregar lógica adicional, como limpiar el formulario o mostrar un mensaje
+        if (editingId) {
+            actions.editarAnuncio(editingId, marca, kilometros, ano, precio, descripcion);
+            setMensaje("Anuncio editado con éxito!");
+        } else {
+            actions.addAnuncio(marca, kilometros, ano, precio, descripcion);
+            setMensaje("Anuncio publicado con éxito!");
+        }
+        resetForm();
     };
+
+    const resetForm = () => {
+        setMarca("");
+        setKilometros("");
+        setAno("");
+        setPrecio("");
+        setDescripcion("");
+        setEditingId(null);
+    };
+
+    const handleEdit = (anuncio) => {
+        setMarca(anuncio.marca);
+        setKilometros(anuncio.kilometros);
+        setAno(anuncio.ano);
+        setPrecio(anuncio.precio);
+        setDescripcion(anuncio.descripcion);
+        setEditingId(anuncio.id); // Establece el ID del anuncio a editar
+    };
+    useEffect(()=>{
+        actions.getAnuncios()
+    },[])
 
     return (
         <div className="container d-flex flex-column align-items-between" style={{ height: '125vh' }}>
             <div className="d-flex flex-row">
-                {/* Formulario */}
                 <div className="card my-5" style={{ width: '18rem', marginRight: '20px' }}>
                     <div className="card-body">
                         <h1 className="text-muted parrafo mb-4">Publica su anuncio</h1>
@@ -39,13 +65,14 @@ export const Publica = () => {
                         <h5 className="card-title">Descripción</h5>
                         <textarea className="form-control mb-3" rows="3" placeholder="Escribe una descripción aquí" value={descripcion} onChange={(e) => setDescripcion(e.target.value)}></textarea>
                         
-                        <button className="btn btn-success mt-4" onClick={handlePublicar}>Publica</button>
-    
+                        <button className="btn btn-success mt-4" onClick={handlePublicar}>
+                            {editingId ? "Actualizar" : "Publicar"}
+                        </button>
+
                         {mensaje && <div className="alert alert-success mt-3">{mensaje}</div>}
                     </div>
                 </div>
     
-                {/* Contenedor de Mis Anuncios */}
                 <div className="container my-5 bg-light" style={{ flex: 1 }}>
                     <h1 className="text-muted text-center mb-4">Mis anuncios</h1>
                     <div className="row">
@@ -64,6 +91,9 @@ export const Publica = () => {
                                                 <button onClick={() => actions.eliminarAnuncio(anuncio.id)} className="btn btn-danger ml-2" style={{ marginLeft: "10px" }}>
                                                     Eliminar
                                                 </button>
+                                                <button onClick={() => handleEdit(anuncio)} className="btn btn-primary ml-2">
+                                                    Editar
+                                                </button>
                                             </div>
                                         </div>
                                     </div>
@@ -81,5 +111,4 @@ export const Publica = () => {
             </div>
         </div>
     );
-    
 };

@@ -2,11 +2,12 @@
 This module takes care of starting the API Server, loading the DB, and adding the endpoints.
 """
 from flask import Flask, request, jsonify, Blueprint
-from api.models import db, User
+from api.models import db, User, Anuncio
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 from flask_jwt_extended import create_access_token
 from flask_jwt_extended import jwt_required, get_jwt_identity
+
 
 
 api = Blueprint('api', __name__)
@@ -63,6 +64,99 @@ def login_user():
     return jsonify({"token" : token})
 
 
-    
 
+#  crear un anuncio
+@api.route('/anuncios', methods=['POST'])
+@jwt_required()
+def crear_anuncio():
+    request_body = request.json
+    marca = request_body.get('marca')
+    kilometros = request_body.get('kilometros')
+    ano = request_body.get('ano')
+    precio = request_body.get('precio')
+    descripcion = request_body.get('descripcion')
+    user_id = get_jwt_identity()  # Obtener el ID del usuario autenticado
+
+    nuevo_anuncio = Anuncio(
+        marca=marca,
+        kilometros=kilometros,
+        ano=ano,
+        precio=precio,
+        descripcion=descripcion,
+        user_id=user_id
+    )
+    db.session.add(nuevo_anuncio)
+    db.session.commit()
+
+    return jsonify({"msg": "Anuncio creado con éxito", "anuncio": nuevo_anuncio.id}), 201
+
+#todos los anuncios
+@api.route('/anuncios', methods=['GET'])
+def obtener_anuncios():
+    anuncios = Anuncio.query.all()
+    return jsonify([{
+        "id": anuncio.id,
+        "marca": anuncio.marca,
+        "kilometros": anuncio.kilometros,
+        "ano": anuncio.ano,
+        "precio": anuncio.precio,
+        "descripcion": anuncio.descripcion,
+        "user_id": anuncio.user_id
+    } for anuncio in anuncios]), 200
+
+#obtener anuncios de un usuario
+@api.route('/mis_anuncios', methods=['GET'])
+@jwt_required()
+def obtener_mis_anuncios():
+    user_id = get_jwt_identity()  # Obtener el ID del usuario autenticado
+    anuncios = Anuncio.query.filter_by(user_id=user_id).all()
+    return jsonify([{
+        "id": anuncio.id,
+        "marca": anuncio.marca,
+        "kilometros": anuncio.kilometros,
+        "ano": anuncio.ano,
+        "precio": anuncio.precio,
+        "descripcion": anuncio.descripcion,
+    } for anuncio in anuncios]), 200
+
+#editar un anuncio
+@api.route('/anuncios/<int:anuncio_id>', methods=['PUT'])
+@jwt_required()
+def actualizar_anuncio(anuncio_id):
+    request_body = request.json
+    anuncio = Anuncio.query.get(anuncio_id)
+
+    if not anuncio:
+        return jsonify({"msg": "Anuncio no encontrado"}), 404
+
+    user_id = get_jwt_identity()
+    if anuncio.user_id != user_id:
+        return jsonify({"msg": "No tienes permiso para modificar este anuncio"}), 403
+
+    # Actualizar los campos del anuncio
+    anuncio.marca = request_body.get('marca', anuncio.marca)
+    anuncio.kilometros = request_body.get('kilometros', anuncio.kilometros)
+    anuncio.ano = request_body.get('ano', anuncio.ano)
+    anuncio.precio = request_body.get('precio', anuncio.precio)
+    anuncio.descripcion = request_body.get('descripcion', anuncio.descripcion)
+
+    db.session.commit()
+    return jsonify({"msg": "Anuncio actualizado con éxito"}), 200
+
+# eliminar un anuncio
+@api.route('/anuncios/<int:anuncio_id>', methods=['DELETE'])
+@jwt_required()
+def eliminar_anuncio(anuncio_id):
+    anuncio = Anuncio.query.get(anuncio_id)
+
+    if not anuncio:
+        return jsonify({"msg": "Anuncio no encontrado"}), 404
+
+    user_id = get_jwt_identity()
+    if anuncio.user_id != user_id:
+        return jsonify({"msg": "No tienes permiso para eliminar este anuncio"}), 403
+
+    db.session.delete(anuncio)
+    db.session.commit()
+    return jsonify({"msg": "Anuncio eliminado con éxito"}), 200
 

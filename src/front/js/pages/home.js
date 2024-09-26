@@ -31,14 +31,9 @@ export const Home = () => {
 												onClick={() => actions.addCesta(anuncio)}
 												className="fa fa-shopping-cart"
 												title="Añadir a la cesta"
+												style={{ color: 'blue' }}
 											></button>
-											<button
-												onClick={() => actions.eliminarAnuncio(anuncio.id)}
-												className="btn btn-danger ml-2"
-												style={{ marginLeft: "10px" }} // Espaciado adicional
-											>
-												Eliminar
-											</button>
+											
 										</div>
 									</div>
 								</div>
