@@ -23,7 +23,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			crearUsuario: (email, password) => {
 				return new Promise((resolve, reject) => {
-					fetch(process.env.BACKEND_URL + '/api/signUp', {
+					fetch(process.env.BACKEND_URL + 'api/signUp', {
 						method: 'POST',
 						headers: {
 							'Content-Type': 'application/json'
@@ -79,7 +79,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 					});
 				});
 			},
-
+			
+			// crear un anuncio
 			addAnuncio: (marca, kilometros, ano, precio, descripcion, ) => {
 				const token = localStorage.getItem("token")
 				fetch(process.env.BACKEND_URL + '/api/anuncios', {
@@ -111,6 +112,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 					reject(error);  // Rechazamos la promesa con el error capturado
 				});
 			},
+			
+			// trae anuncios que un usuario añade a su cesta desde home
 			addCesta: (anuncio) => {
                 const store = getStore();
                 const existe = store.cesta.find(item => item.id === anuncio.id);
@@ -121,6 +124,8 @@ const getState = ({ getStore, getActions, setStore }) => {
                     setStore({ cesta: [...store.cesta, anuncio] });
                 }
 			},
+			
+			//usuario elimina su anuncio de todos los componentes
 			eliminarAnuncio: (id) => {
 				const store = getStore();
 				const nuevosAnuncios = store.anuncios.filter(anuncio => anuncio.id !== id);
@@ -131,6 +136,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 					cesta: nuevaCesta
 				});
 			},
+
+			//eliminar anuncio de la cesta
+			
+			//usuario edita su anuncio y actualiza en todos los componentes
 			editarAnuncio: (id, marca, kilometros, ano, precio, descripcion) => {
 				const store = getStore();
 				
@@ -152,15 +161,16 @@ const getState = ({ getStore, getActions, setStore }) => {
 			
 				setStore({ anuncios: nuevosAnuncios, cesta: nuevaCesta });
 			},
+			
+			//trae todos los anuncios a home
 			getAnuncios : () => {
 				fetch(process.env.BACKEND_URL + '/api/anuncios')
 				.then(response => response.json())
 				.then(data => setStore({anuncios: data}))
 				.catch(error => console.log(error))
 			}
-			
-			
-			
+
+			//trae los anuncios de un usuario
 		}
 	};
 };

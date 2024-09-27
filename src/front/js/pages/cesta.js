@@ -18,7 +18,12 @@ export const Cesta = () => {
                                     <p className="card-text"><strong>Año:</strong> {anuncio.ano}</p>
                                     <p className="card-text"><strong>Precio:</strong> {anuncio.precio.toLocaleString()} €</p>
                                     <p className="card-text"><strong>Descripción:</strong> {anuncio.descripcion}</p>
-                                    <button onClick={() => actions.addCesta(anuncio)} className="fa fa-trash"></button> 
+                                    <button 
+                                        onClick={() => 
+                                        actions.addCesta(anuncio)} 
+                                        className="fa fa-trash"
+                                        style={{ color: 'red' }}
+                                    ></button> 
                                 </div>
                             </div>
                         </div>

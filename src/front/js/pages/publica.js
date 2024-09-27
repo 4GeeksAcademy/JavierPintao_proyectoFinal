@@ -87,12 +87,11 @@ export const Publica = () => {
                                             <p className="card-text"><strong>Precio:</strong> {anuncio.precio.toLocaleString()} €</p>
                                             <p className="card-text"><strong>Descripción:</strong> {anuncio.descripcion}</p>
                                             <div className="d-flex justify-content-between">
-                                                <button onClick={() => actions.addCesta(anuncio)} className="fa fa-shopping-cart" title="Añadir a la cesta"></button>
-                                                <button onClick={() => actions.eliminarAnuncio(anuncio.id)} className="btn btn-danger ml-2" style={{ marginLeft: "10px" }}>
-                                                    Eliminar
-                                                </button>
                                                 <button onClick={() => handleEdit(anuncio)} className="btn btn-primary ml-2">
                                                     Editar
+                                                </button>
+                                                <button onClick={() => actions.eliminarAnuncio(anuncio.id)} className="btn btn-danger ml-2" style={{ marginLeft: "10px" }}>
+                                                    Eliminar
                                                 </button>
                                             </div>
                                         </div>
