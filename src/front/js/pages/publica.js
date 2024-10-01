@@ -11,6 +11,7 @@ export const Publica = () => {
     const [precio, setPrecio] = useState("");
     const [mensaje, setMensaje] = useState("");
     const [editingId, setEditingId] = useState(null); // Estado para el ID del anuncio en edición
+    const emailUsuario = store.email;
 
     const handlePublicar = async () => {
         try {
@@ -54,8 +55,9 @@ export const Publica = () => {
 
     return (
         <div className="container d-flex flex-column align-items-between" style={{ height: '125vh' }}>
+             <h5>{store.email ? `USUARIO: ${store.email}` : "No hay usuario autenticado"}</h5> {/* Mostrar email aquí */}
             <div className="d-flex flex-row">
-                <div className="card my-5" style={{ width: '18rem', marginRight: '20px' }}>
+                <div className="card my-5 mt-0" style={{ width: '18rem', marginRight: '20px' }}>
                     <div className="card-body">
                         <h1 className="text-muted parrafo mb-4">Publica su anuncio</h1>
                         <h5 className="card-title">Marca y modelo</h5>

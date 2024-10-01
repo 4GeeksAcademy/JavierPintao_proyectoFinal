@@ -3,9 +3,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 		store: {
 			anuncios: [],
 			cesta: [],
-			mis_anuncios: [], 
-			
-			
+			mis_anuncios: [],
+			email: localStorage.getItem("email") || null, 
 		},
 		actions: {
 
@@ -50,7 +49,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 					});
 				});
 			},
-			
 			iniciarSesion: (email, password) => {
 				return new Promise((resolve, reject) => {
 					fetch(process.env.BACKEND_URL + '/api/login', {
@@ -65,21 +63,25 @@ const getState = ({ getStore, getActions, setStore }) => {
 					})
 					.then(response => {
 						if (!response.ok) {
-							return reject('Error en la solicitud: ' + response.status);  // Rechazamos la promesa en caso de error
+							return reject('Error en la solicitud: ' + response.status);
 						}
 						return response.json();
 					})
 					.then(data => {
 						console.log('Datos recibidos:', data);
-						localStorage.setItem("token", data.token);  // Guardamos el token en localStorage
-						resolve(data);  // Resolución exitosa de la promesa
+						localStorage.setItem("token", data.token); // Guardamos el token en localStorage
+						localStorage.setItem("email", email); // Almacena el email en localStorage
+						setStore({ email: email }); // Almacena el email en el store
+						resolve(data);
 					})
 					.catch(error => {
 						console.error('Hubo un problema con la solicitud:', error);
-						reject(error);  // Rechazamos la promesa con el error capturado
+						reject(error);
 					});
 				});
 			},
+			
+			
 			
 			// crear un anuncio
 			addAnuncio: (marca, kilometros, ano, precio, descripcion) => {
