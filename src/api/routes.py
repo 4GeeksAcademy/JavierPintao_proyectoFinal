@@ -90,7 +90,7 @@ def crear_anuncio():
 
     return jsonify({"msg": "Anuncio creado con éxito", "anuncio": nuevo_anuncio.id}), 201
 
-#todos los anuncios
+# obtiene todos los anuncios
 @api.route('/anuncios', methods=['GET'])
 def obtener_anuncios():
     anuncios = Anuncio.query.all()
@@ -104,7 +104,7 @@ def obtener_anuncios():
         "user_id": anuncio.user_id
     } for anuncio in anuncios]), 200
 
-#obtener anuncios de un usuario
+#obtiene los  anuncios de un usuario
 @api.route('/mis_anuncios', methods=['GET'])
 @jwt_required()
 def obtener_mis_anuncios():
@@ -119,7 +119,7 @@ def obtener_mis_anuncios():
         "descripcion": anuncio.descripcion,
     } for anuncio in anuncios]), 200
 
-#editar un anuncio
+#editar un anuncio de un id
 @api.route('/anuncios/<int:anuncio_id>', methods=['PUT'])
 @jwt_required()
 def actualizar_anuncio(anuncio_id):
@@ -143,7 +143,7 @@ def actualizar_anuncio(anuncio_id):
     db.session.commit()
     return jsonify({"msg": "Anuncio actualizado con éxito"}), 200
 
-# eliminar un anuncio
+# eliminar un anuncio de un id
 @api.route('/anuncios/<int:anuncio_id>', methods=['DELETE'])
 @jwt_required()
 def eliminar_anuncio(anuncio_id):

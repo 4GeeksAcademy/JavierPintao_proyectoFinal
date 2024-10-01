@@ -12,16 +12,23 @@ export const Publica = () => {
     const [mensaje, setMensaje] = useState("");
     const [editingId, setEditingId] = useState(null); // Estado para el ID del anuncio en edición
 
-    const handlePublicar = () => {
-        if (editingId) {
-            actions.editarAnuncio(editingId, marca, kilometros, ano, precio, descripcion);
-            setMensaje("Anuncio editado con éxito!");
-        } else {
-            actions.addAnuncio(marca, kilometros, ano, precio, descripcion);
-            setMensaje("Anuncio publicado con éxito!");
+    const handlePublicar = async () => {
+        try {
+            if (editingId) {
+                await actions.editarAnuncio(editingId, marca, kilometros, ano, precio, descripcion);
+                setMensaje("Anuncio editado con éxito!");
+            } else {
+                await actions.addAnuncio(marca, kilometros, ano, precio, descripcion);
+                setMensaje("Anuncio publicado con éxito!");
+            }
+            resetForm(); // Resetea el formulario después de que la acción se complete
+        } catch (err) {
+            console.error("Error al publicar o editar el anuncio:", err);
+            setMensaje("Hubo un problema al procesar su solicitud."); // Muestra un mensaje al usuario
         }
-        resetForm();
     };
+    
+    
 
     const resetForm = () => {
         setMarca("");
@@ -40,9 +47,10 @@ export const Publica = () => {
         setDescripcion(anuncio.descripcion);
         setEditingId(anuncio.id); // Establece el ID del anuncio a editar
     };
-    useEffect(()=>{
-        actions.getAnuncios()
-    },[])
+
+    useEffect(() => {
+        actions.misAnuncios(); // Cambiar a misAnuncios para obtener solo los anuncios del usuario
+    }, [actions]); // Agregado actions como dependencia
 
     return (
         <div className="container d-flex flex-column align-items-between" style={{ height: '125vh' }}>
@@ -76,8 +84,8 @@ export const Publica = () => {
                 <div className="container my-5 bg-light" style={{ flex: 1 }}>
                     <h1 className="text-muted text-center mb-4">Mis anuncios</h1>
                     <div className="row">
-                        {store.anuncios.length > 0 ? (
-                            store.anuncios.map((anuncio, index) => (
+                        {store.mis_anuncios.length > 0 ? (
+                            store.mis_anuncios.map((anuncio, index) => (
                                 <div key={index} className="col-md-4 mb-4">
                                     <div className="card shadow-sm">
                                         <div className="card-body">
