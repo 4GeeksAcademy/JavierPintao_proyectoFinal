@@ -81,8 +81,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 				});
 			},
 			
-			
-			
 			// crear un anuncio
 			addAnuncio: (marca, kilometros, ano, precio, descripcion) => {
 				const token = localStorage.getItem("token");
@@ -107,8 +105,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 					})
 				})
 				.then(response => {
-					if (!response.ok) {
-						throw new Error('Error al crear el anuncio: ' + response.status);
+					if (response == 200) {
+						misAnuncios()
 					}
 					return response.json();
 				})
@@ -131,7 +129,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.error('Hubo un problema al crear el anuncio:', error);
 				});
 			},
-			
 
 			//trae todos los anuncios a home
 			getAnuncios : () => {
@@ -299,6 +296,76 @@ const getState = ({ getStore, getActions, setStore }) => {
 				.catch(error => {
 					console.error('Error al actualizar el anuncio:', error);
 				});
+			},
+
+			createPayment: async (anuncio_id) => {
+				const token = localStorage.getItem("token");
+
+				if (!token) {
+					console.error("Token no encontrado, el usuario no está autenticado");
+					return;
+				}
+
+				try {
+					const response = await fetch(process.env.BACKEND_URL + '/api/create-payment', {
+						method: 'POST',
+						headers: {
+							'Authorization': `Bearer ${token}`,
+							'Content-Type': 'application/json'
+						},
+						body: JSON.stringify({
+							anuncio_id: anuncio_id  // Pasamos el id del anuncio que se está pagando
+						})
+					});
+
+					if (!response.ok) {
+						throw new Error('Error al crear el pago');
+					}
+
+					const data = await response.json();
+					return data.paymentID;  // Devolvemos el ID del pago de PayPal
+
+				} catch (error) {
+					console.error('Error en la creación del pago:', error);
+				}
+			},
+
+			// Ejecutar el pago de PayPal
+			executePayment: async (paymentID, payerID, anuncio_id) => {
+				const token = localStorage.getItem("token");
+
+				if (!token) {
+					console.error("Token no encontrado, el usuario no está autenticado");
+					return;
+				}
+
+				try {
+					const response = await fetch(process.env.BACKEND_URL + '/api/execute-payment', {
+						method: 'POST',
+						headers: {
+							'Authorization': `Bearer ${token}`,
+							'Content-Type': 'application/json'
+						},
+						body: JSON.stringify({
+							paymentID: paymentID,  // ID del pago que generamos previamente
+							payerID: payerID,  // ID del comprador, que obtenemos de la redirección de PayPal
+							anuncio_id: anuncio_id  // ID del anuncio por el que se está pagando
+						})
+					});
+
+					if (!response.ok) {
+						throw new Error('Error al ejecutar el pago');
+					}
+
+					const data = await response.json();
+					console.log('Pago completado:', data);
+
+					// Vaciar la cesta o actualizar el estado de pagos completados
+					setStore({ cesta: [] });  // Vaciamos la cesta al finalizar el pago
+
+				} catch (error) {
+					console.error('Error al ejecutar el pago:', error);
+				}
 			},
 			
 			

@@ -1,8 +1,16 @@
 import React, { useContext } from "react";
 import { Context } from "../store/appContext";
+import PayPalButton from "../component/paypall";  
 
 export const Cesta = () => {
     const { store, actions } = useContext(Context);
+
+    const handlePaymentSuccess = (details, anuncio) => {
+        // Aquí puedes realizar la lógica que sigue después de un pago exitoso
+        // Por ejemplo, eliminar el anuncio de la cesta o actualizar el estado en la base de datos
+        console.log("Transaction completed by: ", details.payer.name.given_name);
+        actions.addCesta(anuncio); // Eliminar de la cesta después del pago exitoso
+    };
 
     return (
         <div className="container my-5 bg-light">
@@ -19,11 +27,20 @@ export const Cesta = () => {
                                     <p className="card-text"><strong>Precio:</strong> {anuncio.precio.toLocaleString()} €</p>
                                     <p className="card-text"><strong>Descripción:</strong> {anuncio.descripcion}</p>
                                     <button 
-                                        onClick={() => 
-                                        actions.addCesta(anuncio)} 
+                                        onClick={() => actions.addCesta(anuncio)} 
                                         className="fa fa-trash"
                                         style={{ color: 'red' }}
-                                    ></button> 
+                                    ></button>
+
+                                    {/* PayPal button with dynamic amount */}
+                                    {/*
+                                    <PayPalButton 
+                                        amount={anuncio.precio}  // Aquí pasamos el precio del anuncio dinámicamente
+                                        currency="EUR"            // Cambiar la moneda a EUR
+                                        onSuccess={(details) => handlePaymentSuccess(details, anuncio)} // Lógica después del pago exitoso
+                                    />
+                                    */}
+                                    
                                 </div>
                             </div>
                         </div>

@@ -51,11 +51,14 @@ export const Publica = () => {
 
     useEffect(() => {
         actions.misAnuncios(); // Cambiar a misAnuncios para obtener solo los anuncios del usuario
-    }, [actions]); // Agregado actions como dependencia
+    }, []); // Agregado actions como dependencia
+    useEffect(() => {
+        console.log(store.mis_anuncios) // Cambiar a misAnuncios para obtener solo los anuncios del usuario
+    }, [store.mis_anuncios]);
 
     return (
-        <div className="container d-flex flex-column align-items-between" style={{ height: '125vh' }}>
-             <h5>{store.email ? `USUARIO: ${store.email}` : "No hay usuario autenticado"}</h5> {/* Mostrar email aquí */}
+        <div className="container d-flex flex-column align-items-between">
+             <h5 className="text-end">{store.email ? `USUARIO: ${store.email}` : "No hay usuario autenticado"}</h5>
             <div className="d-flex flex-row">
                 <div className="card my-5 mt-0" style={{ width: '18rem', marginRight: '20px' }}>
                     <div className="card-body">
@@ -86,7 +89,7 @@ export const Publica = () => {
                 <div className="container my-5 bg-light" style={{ flex: 1 }}>
                     <h1 className="text-muted text-center mb-4">Mis anuncios</h1>
                     <div className="row">
-                        {store.mis_anuncios.length > 0 ? (
+                        {store.mis_anuncios ? (
                             store.mis_anuncios.map((anuncio, index) => (
                                 <div key={index} className="col-md-4 mb-4">
                                     <div className="card shadow-sm">

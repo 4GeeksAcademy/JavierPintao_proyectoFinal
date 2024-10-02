@@ -7,6 +7,8 @@ from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 from flask_jwt_extended import create_access_token
 from flask_jwt_extended import jwt_required, get_jwt_identity
+#import paypalrestsdk  # SDK de PayPal
+#from paypalrestsdk import Payment
 
 
 
@@ -159,4 +161,75 @@ def eliminar_anuncio(anuncio_id):
     db.session.delete(anuncio)
     db.session.commit()
     return jsonify({"msg": "Anuncio eliminado con éxito"}), 200
+
+# --- PASARELA DE PAGO PAYPAL ---
+
+# Endpoint para crear un pago con PayPal
+@api.route('/create-payment', methods=['POST'])
+@jwt_required()
+def create_payment():
+    request_body = request.json
+    anuncio_id = request_body.get('anuncio_id')
+    
+    anuncio = Anuncio.query.get(anuncio_id)
+    if not anuncio:
+        return jsonify({"msg": "Anuncio no encontrado"}), 404
+
+    payment = Payment({
+        "intent": "sale",
+        "payer": {
+            "payment_method": "paypal"
+        },
+        "transactions": [{
+            "amount": {
+                "total": f"{anuncio.precio:.2f}",
+                "currency": "EUR"
+            },
+            "description": f"Pago por el anuncio: {anuncio.marca}"
+        }],
+        "redirect_urls": {
+            "return_url": "http://localhost:3000/success",  # URL de éxito (puedes ajustarla)
+            "cancel_url": "http://localhost:3000/cancel"  # URL de cancelación
+        }
+    })
+
+    if payment.create():
+        return jsonify({"paymentID": payment.id})
+    else:
+        return jsonify({"error": payment.error}), 500
+
+# Endpoint para ejecutar el pago
+@api.route('/execute-payment', methods=['POST'])
+@jwt_required()
+def execute_payment():
+    request_body = request.json
+    payment_id = request_body.get('paymentID')
+    payer_id = request_body.get('payerID')
+
+    payment = paypalrestsdk.Payment.find(payment_id)
+
+    if payment.execute({"payer_id": payer_id}):
+        # Obtener el usuario autenticado
+        user_id = get_jwt_identity()
+
+        # Obtener los detalles de la transacción
+        anuncio_id = request_body.get('anuncio_id')
+        anuncio = Anuncio.query.get(anuncio_id)
+
+        # Crear registro de la transacción en la base de datos
+        nueva_transaccion = Transaction(
+            transaction_id=payment.id,
+            amount=anuncio.precio,
+            currency='EUR',  # Ajusta la moneda si es necesario
+            status=payment.state,
+            anuncio_id=anuncio.id,
+            user_id=user_id
+        )
+        db.session.add(nueva_transaccion)
+        db.session.commit()
+
+        return jsonify({"msg": "Pago completado con éxito", "transaction": nueva_transaccion.serialize()}), 200
+    else:
+        return jsonify({"error": payment.error}), 500
+
 
