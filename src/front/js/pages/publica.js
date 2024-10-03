@@ -28,8 +28,6 @@ export const Publica = () => {
             setMensaje("Hubo un problema al procesar su solicitud."); // Muestra un mensaje al usuario
         }
     };
-    
-    
 
     const resetForm = () => {
         setMarca("");
@@ -52,13 +50,15 @@ export const Publica = () => {
     useEffect(() => {
         actions.misAnuncios(); // Cambiar a misAnuncios para obtener solo los anuncios del usuario
     }, []); // Agregado actions como dependencia
+
+    // Console.log para verificar anuncios obtenidos
     useEffect(() => {
-        console.log(store.mis_anuncios) // Cambiar a misAnuncios para obtener solo los anuncios del usuario
+        console.log("Mis Anuncios:", store.mis_anuncios);
     }, [store.mis_anuncios]);
 
     return (
         <div className="container d-flex flex-column align-items-between">
-             <h5 className="text-end">{store.email ? `USUARIO: ${store.email}` : "No hay usuario autenticado"}</h5>
+            <h5 className="text-end">{store.email ? `USUARIO: ${store.email}` : "No hay usuario autenticado"}</h5>
             <div className="d-flex flex-row">
                 <div className="card my-5 mt-0" style={{ width: '18rem', marginRight: '20px' }}>
                     <div className="card-body">
@@ -89,7 +89,7 @@ export const Publica = () => {
                 <div className="container my-5 bg-light" style={{ flex: 1 }}>
                     <h1 className="text-muted text-center mb-4">Mis anuncios</h1>
                     <div className="row">
-                        {store.mis_anuncios ? (
+                        {store.mis_anuncios && store.mis_anuncios.length > 0 ? (
                             store.mis_anuncios.map((anuncio, index) => (
                                 <div key={index} className="col-md-4 mb-4">
                                     <div className="card shadow-sm">
@@ -97,7 +97,7 @@ export const Publica = () => {
                                             <h5 className="card-title">{anuncio.marca}</h5>
                                             <p className="card-text"><strong>Kilómetros:</strong> {anuncio.kilometros}</p>
                                             <p className="card-text"><strong>Año:</strong> {anuncio.ano}</p>
-                                            <p className="card-text"><strong>Precio:</strong> {anuncio.precio.toLocaleString()} €</p>
+                                            <p className="card-text"><strong>Precio:</strong> {anuncio.precio} €</p> {/* Eliminado toLocaleString() */}
                                             <p className="card-text"><strong>Descripción:</strong> {anuncio.descripcion}</p>
                                             <div className="d-flex justify-content-between">
                                                 <button onClick={() => handleEdit(anuncio)} className="btn btn-primary ml-2">

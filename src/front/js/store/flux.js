@@ -113,17 +113,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				.then(data => {
 					console.log('Anuncio creado:', data);
 					
-					const store = getStore();
-					
-					// Actualiza el estado
-					const nuevosAnuncios = [...store.anuncios, data];
-					const nuevosMisAnuncios = [...store.mis_anuncios, data];
-			
-					// Actualiza el store
-					setStore({
-						anuncios: nuevosAnuncios,
-						mis_anuncios: nuevosMisAnuncios
-					});
+					getActions().misAnuncios()
 				})
 				.catch(error => {
 					console.error('Hubo un problema al crear el anuncio:', error);
