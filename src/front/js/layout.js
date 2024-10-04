@@ -12,7 +12,7 @@ import { Inicio } from "./pages/inicio";
 import { Talleres } from "./pages/talleres";
 
 import {  } from "./pages/publica";
-
+import Pago from "./pages/pago";
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
 import { Publica } from "./pages/publica";
@@ -36,7 +36,7 @@ const Layout = () => {
                         <Route element={<Single />} path="/single/:theid" />
                         <Route element={<Inicio />} path="/inicio" />
                         <Route element={<Talleres />} path="/talleres" />
-                        
+                        <Route element={<Pago />} path="/pago" />
                         <Route element={<Publica />} path="/publica" />
                         <Route element={<h1>Not found!</h1>} />
                     </Routes>
