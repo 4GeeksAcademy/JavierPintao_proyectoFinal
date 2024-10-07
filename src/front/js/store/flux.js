@@ -23,7 +23,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			crearUsuario: (email, password) => {
 				return new Promise((resolve, reject) => {
-					fetch(process.env.BACKEND_URL + 'api/signUp', {
+					fetch(process.env.BACKEND_URL + '/api/signUp', {
 						method: 'POST',
 						headers: {
 							'Content-Type': 'application/json'
@@ -320,43 +320,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 
-			// Ejecutar el pago de PayPal
-			executePayment: async (paymentID, payerID, anuncio_id) => {
-				const token = localStorage.getItem("token");
-
-				if (!token) {
-					console.error("Token no encontrado, el usuario no está autenticado");
-					return;
-				}
-
-				try {
-					const response = await fetch(process.env.BACKEND_URL + '/api/execute-payment', {
-						method: 'POST',
-						headers: {
-							'Authorization': `Bearer ${token}`,
-							'Content-Type': 'application/json'
-						},
-						body: JSON.stringify({
-							paymentID: paymentID,  // ID del pago que generamos previamente
-							payerID: payerID,  // ID del comprador, que obtenemos de la redirección de PayPal
-							anuncio_id: anuncio_id  // ID del anuncio por el que se está pagando
-						})
-					});
-
-					if (!response.ok) {
-						throw new Error('Error al ejecutar el pago');
-					}
-
-					const data = await response.json();
-					console.log('Pago completado:', data);
-
-					// Vaciar la cesta o actualizar el estado de pagos completados
-					setStore({ cesta: [] });  // Vaciamos la cesta al finalizar el pago
-
-				} catch (error) {
-					console.error('Error al ejecutar el pago:', error);
-				}
-			},
 			
 			
 			

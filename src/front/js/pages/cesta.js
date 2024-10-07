@@ -1,13 +1,11 @@
 import React, { useContext } from "react";
 import { Context } from "../store/appContext";
-import PayPalButton from "../component/paypall";  
+import { Link } from "react-router-dom";
 
 export const Cesta = () => {
     const { store, actions } = useContext(Context);
 
     const handlePaymentSuccess = (details, anuncio) => {
-        // Aquí puedes realizar la lógica que sigue después de un pago exitoso
-        // Por ejemplo, eliminar el anuncio de la cesta o actualizar el estado en la base de datos
         console.log("Transaction completed by: ", details.payer.name.given_name);
         actions.addCesta(anuncio); // Eliminar de la cesta después del pago exitoso
     };
@@ -26,21 +24,23 @@ export const Cesta = () => {
                                     <p className="card-text"><strong>Año:</strong> {anuncio.ano}</p>
                                     <p className="card-text"><strong>Precio:</strong> {anuncio.precio.toLocaleString()} €</p>
                                     <p className="card-text"><strong>Descripción:</strong> {anuncio.descripcion}</p>
-                                    <button 
-                                        onClick={() => actions.addCesta(anuncio)} 
-                                        className="fa fa-trash"
-                                        style={{ color: 'red' }}
-                                    ></button>
-
-                                    {/* PayPal button with dynamic amount */}
-                                    {/*
-                                    <PayPalButton 
-                                        amount={anuncio.precio}  // Aquí pasamos el precio del anuncio dinámicamente
-                                        currency="EUR"            // Cambiar la moneda a EUR
-                                        onSuccess={(details) => handlePaymentSuccess(details, anuncio)} // Lógica después del pago exitoso
-                                    />
-                                    */}
                                     
+                                    <div className="d-flex justify-content-between mt-3">
+                                        <button 
+                                            onClick={() => actions.addCesta(anuncio)} 
+                                            className="btn btn-danger"
+                                            style={{ minWidth: '100px' }}
+                                        >
+                                            Eliminar
+                                        </button>
+                                        <Link 
+                                            to="/pago" 
+                                            className="btn btn-primary" 
+                                            style={{ minWidth: '100px' }}
+                                        >
+                                            Comprar
+                                        </Link>
+                                    </div>
                                 </div>
                             </div>
                         </div>
