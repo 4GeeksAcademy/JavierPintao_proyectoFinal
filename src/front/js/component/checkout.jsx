@@ -15,8 +15,8 @@ export const CheckoutForm = () => {
         fetch('https://fuzzy-dollop-q6jprgx7j6j24rxj-3001.app.github.dev/api/create-payment', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          //la cantidad ha pagar esta puesta fija, pero puede recibir un objeto desde el contexto
-          body: JSON.stringify({ amount: 1000, currency: 'usd' }) // Amount in cents
+          //la cantidad a pagar esta puesta fija, pero puede recibir un objeto desde el contexto
+          body: JSON.stringify({ amount: 0.1000, currency: 'usd' }) // Amount in cents
         })
           .then((res) => res.json())
           .then((data) => setClientSecret(data.clientSecret));
@@ -56,7 +56,7 @@ export const CheckoutForm = () => {
     return (
       <form onSubmit={handleSubmit}>
         <CardElement />
-        <button type="submit" disabled={!stripe || loading}>
+        <button className="mt-2" type="submit" disabled={!stripe || loading}>
           Pay
         </button>
       </form>

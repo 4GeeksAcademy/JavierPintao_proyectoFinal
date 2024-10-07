@@ -288,37 +288,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				});
 			},
 
-			createPayment: async (anuncio_id) => {
-				const token = localStorage.getItem("token");
-
-				if (!token) {
-					console.error("Token no encontrado, el usuario no está autenticado");
-					return;
-				}
-
-				try {
-					const response = await fetch(process.env.BACKEND_URL + '/api/create-payment', {
-						method: 'POST',
-						headers: {
-							'Authorization': `Bearer ${token}`,
-							'Content-Type': 'application/json'
-						},
-						body: JSON.stringify({
-							anuncio_id: anuncio_id  // Pasamos el id del anuncio que se está pagando
-						})
-					});
-
-					if (!response.ok) {
-						throw new Error('Error al crear el pago');
-					}
-
-					const data = await response.json();
-					return data.paymentID;  // Devolvemos el ID del pago de PayPal
-
-				} catch (error) {
-					console.error('Error en la creación del pago:', error);
-				}
-			},
+			
 
 			
 			

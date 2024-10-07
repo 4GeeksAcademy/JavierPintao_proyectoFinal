@@ -5,10 +5,7 @@ import { Link } from "react-router-dom";
 export const Cesta = () => {
     const { store, actions } = useContext(Context);
 
-    const handlePaymentSuccess = (details, anuncio) => {
-        console.log("Transaction completed by: ", details.payer.name.given_name);
-        actions.addCesta(anuncio); // Eliminar de la cesta después del pago exitoso
-    };
+    
 
     return (
         <div className="container my-5 bg-light">
